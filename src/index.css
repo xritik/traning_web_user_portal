@@ -66,7 +66,7 @@ section {
   font-size: 16px;
   margin-top: 15px;
   padding-left: 20px;
-  height: 33px;
+  height: 40px;
   border-radius: 10px;
   border: 1px solid #ccc;
 }
@@ -135,6 +135,11 @@ nav{
     scale: .9;
   }
 }
+.navbarItems{
+  color: white;
+  text-decoration: none;
+  transition: .2s;
+}
 .logout{
   width: 15%;
   display: flex;
@@ -168,9 +173,10 @@ nav{
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 50px;
+  padding-top:40px;
 }
 .addTainingForm{
+  width: 70vw;
   border: 1px solid #ccc;
   padding: 30px 50px 50px 50px;
   border-radius: 15px;
@@ -179,19 +185,9 @@ nav{
 .formDiv{
   display: flex;
   gap: 30px;
-  input[type= "text"], textarea{
+  input[type= "text"], input[type= "email"], input[type= "tel"], textarea{
     height: 38px;
-    width: 370px;
-    font-size: 15px;
-    padding-left: 5px;
-    margin-top: 20px;
-    outline: none;
-    border-radius: 6px;
-    border: 1px solid black;
-  }
-  input[type= "date"]{
-    height: 38px;
-    width: 289px;
+    width: 47%;
     font-size: 15px;
     padding-left: 5px;
     margin-top: 20px;
@@ -205,6 +201,23 @@ nav{
   }
   .select{
     margin-top: 20px;
+  }
+}
+.formDivDate{
+  display: flex;
+  gap: 60px;
+  label{
+    width: 60%;
+  }
+  input[type= "date"]{
+    height: 38px;
+    font-size: 15px;
+    width: 78.8%;
+    padding-left: 5px;
+    margin-top: 20px;
+    outline: none;
+    border-radius: 6px;
+    border: 1px solid black;
   }
 }
 .submitButton{

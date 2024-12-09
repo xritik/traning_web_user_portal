@@ -1,16 +1,25 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import { Link } from 'react-router-dom';
 
-const Dashboard = () => {
+const Dashboard = ({logout, navigate, message, setMessage}) => {
+
+    const loginEmail = localStorage.getItem('loginEmail');
+    useEffect (() => {
+        if(!loginEmail){
+            navigate('/login')
+            console.log(loginEmail);
+        }
+    },);
   return (
     <section>
         <nav>
             <span className='brandName'>Training</span>
             <span className='navbarItem'>
-                <span>Add Training</span>
-                <span>Search Data</span>
+                <span><Link className='navbarItems' to={'/add_training'}>Add Training</Link></span>
+                <span><Link className='navbarItems' to={'/search'}>Search Data</Link></span>
             </span>
             <span className='logout'>
-                <button>LogOut</button>
+                <button onClick={logout}>LogOut</button>
             </span>
         </nav>
         <div className='dashboardText'>
