@@ -1,7 +1,17 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 
 const AddTraining = ({ logout, setMessage, navigate }) => {
+
+    const loginEmail = localStorage.getItem('loginEmail');
+    useEffect (() => {
+        if(!loginEmail){
+            navigate('/login')
+            console.log(loginEmail);
+        }
+    },);
+
+    
     const [trainingName, setTrainingName] = useState('');
     const [technology, setTechnology] = useState('');
     const [startDate, setStartDate] = useState('');
@@ -27,6 +37,7 @@ const AddTraining = ({ logout, setMessage, navigate }) => {
             const data = await response.json();
             if (response.ok) {
                 setMessage(data.message);  // Success message
+                navigate('/dashboard')
                 navigate('/add_training')
             } else {
                 setMessage(data.message);  // Error message

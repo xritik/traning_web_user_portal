@@ -1,12 +1,62 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-const SearchData = (logout) => {
+const SearchData = ({logout, navigate}) => {
 
     const [searchedText, setSearchedText] = useState('');
     const [searchedData, setSearchedData] = useState([]);
     const [message, setMessage] = useState('');
-    console.log(searchedData.length)
+
+    const loginEmail = localStorage.getItem('loginEmail');
+    useEffect (() => {
+        if(!loginEmail){
+            navigate('/login')
+            console.log(loginEmail);
+        }
+    },);
+
+    useEffect(() => {
+        if (searchedText.trim() === '') {
+            setSearchedData([]);
+            setMessage('');
+            return;
+        };
+
+        if (searchedText) {
+          handleSearch(searchedText);
+        };
+    }, [searchedText]);
+
+
+    const verifyEmail = async (trainingToEdit) => {
+        try {
+            const response = await fetch('http://localhost:5000/admin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ loginEmail }),
+            });
+    
+            const data = await response.json();
+    
+            if (response.status === 200) {
+                // localStorage.removeItem('trainingToEdit');
+                navigate('/edit_training')
+                localStorage.setItem('trainingToEdit', JSON.stringify(trainingToEdit));
+                console.log('Email exists:', data.admin);
+            } else {
+                localStorage.removeItem('trainingToEdit');
+                console.log(data.message); // Email not found
+                // setMessage1("You can't edit, because you'r not an 'Admin' user!!")
+                alert("You can't edit, because you'r not an 'Admin' user!!")
+            }
+        } catch (error) {
+            localStorage.removeItem('trainingToEdit');
+            console.error('Error verifying email:', error);
+        }
+    };
+        
 
     const handleSearch = async () => {
         if (!searchedText.trim()) {
@@ -38,6 +88,10 @@ const SearchData = (logout) => {
             setMessage('An error occurred. Please try again.');
         }
     };
+
+    const handleClear = () => {
+        setSearchedText('');
+    }
   return (
     <section>
         <nav>
@@ -59,19 +113,20 @@ const SearchData = (logout) => {
                     autoFocus 
                     placeholder='Search...'
                     value={searchedText}
-                    onChange={(e) => setSearchedText(e.target.value)}
+                    onChange={(e) => {setSearchedText(e.target.value)}}
                 />
                 <span className='cross'>
-                    <i className='bx bx-x'></i>
+                    <i className='bx bx-x' onClick={handleClear}></i>
                 </span>
                 <span className='searchIcon'>
                     <i className='bx bx-search' onClick={handleSearch}></i>
                 </span>
             </form>
         </div>
-        {searchedData.length == 0 &&
+        {searchedData.length === 0 &&
             <p style={{textAlign: 'center', color:'red', paddingTop:'25px'}}>{message}</p>
         }
+        {/* Invoice date, Payment release date, Payment Amount */}
         {
             searchedData.length > 0 && 
             <>
@@ -91,10 +146,10 @@ const SearchData = (logout) => {
                                 <th>Labs Used</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {searchedData.map((data) => {
-                                return(
-                                    <tr key={data._id}>
+                        {searchedData.map((data) => {
+                            return(
+                                <tbody key={data._id}>
+                                    <tr>
                                         <td>{data.trainingName}</td>
                                         <td>{data.technology}</td>
                                         <td>{data.vendor}</td>
@@ -105,10 +160,13 @@ const SearchData = (logout) => {
                                         <td>{data.endDate}</td>
                                         <td>{data.remarks}</td>
                                         <td>{data.labUsed}</td>
+                                        <div className="editButtonDiv">
+                                            <button onClick={() => verifyEmail(data)} >Edit</button>
+                                        </div>
                                     </tr>
-                                )
-                            })}
-                        </tbody>
+                                </tbody>
+                            )
+                        })}
                     </table>
                 </div>
             </>

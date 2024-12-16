@@ -45,6 +45,18 @@ const trainingSchema = new mongoose.Schema({
         trim: true,
         default: 'Not specified',
     },
+    invoiceDate: {
+        type: String,
+        default: ''
+    },
+    releaseDate: {
+        type: String,
+        default: '',
+    },
+    paymentAmount: {
+        type: String,
+        default: '',
+    }
 }, { timestamps: true }); // Adds createdAt and updatedAt fields automatically
 
 const Training = mongoose.model('Training', trainingSchema);
