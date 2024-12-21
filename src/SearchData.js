@@ -7,11 +7,11 @@ const SearchData = ({logout, navigate}) => {
     const [searchedData, setSearchedData] = useState([]);
     const [message, setMessage] = useState('');
 
-    const loginEmail = localStorage.getItem('loginEmail');
+    const loginName = localStorage.getItem('loginName');
     useEffect (() => {
-        if(!loginEmail){
+        if(!loginName){
             navigate('/login')
-            console.log(loginEmail);
+            console.log(loginName);
         }
     },);
 
@@ -35,20 +35,16 @@ const SearchData = ({logout, navigate}) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ loginEmail }),
+                body: JSON.stringify({ loginName }),
             });
     
             const data = await response.json();
-    
-            if (response.status === 200) {
-                // localStorage.removeItem('trainingToEdit');
+            
+            if (response.status === 200 && data.user.role === 'admin') {
                 navigate('/edit_training')
                 localStorage.setItem('trainingToEdit', JSON.stringify(trainingToEdit));
-                console.log('Email exists:', data.admin);
             } else {
                 localStorage.removeItem('trainingToEdit');
-                console.log(data.message); // Email not found
-                // setMessage1("You can't edit, because you'r not an 'Admin' user!!")
                 alert("You can't edit, because you'r not an 'Admin' user!!")
             }
         } catch (error) {
@@ -160,9 +156,9 @@ const SearchData = ({logout, navigate}) => {
                                         <td>{data.endDate}</td>
                                         <td>{data.remarks}</td>
                                         <td>{data.labUsed}</td>
-                                        <div className="editButtonDiv">
+                                        <td className="editButtonDiv">
                                             <button onClick={() => verifyEmail(data)} >Edit</button>
-                                        </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             )

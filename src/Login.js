@@ -1,11 +1,23 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import loginImage from './imgs&vdos/loginside.svg'
 
-const Login = ({setLoginEmail, navigate, message, setMessage}) => {
+const Login = ({setLoginName, navigate, message, setMessage}) => {
     const [showPassword, setShowPassword] = useState(false);
-    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    console.log(email, password)
+
+
+
+    useEffect(() => {
+        if(message){
+            const timeout = setTimeout(() => {
+                setMessage('');
+            }, 5000);
+    
+            return () => clearTimeout(timeout); // Cleanup the timeout
+        }
+    }, [message, setMessage]);
+
 
     const login = async () => {
         try {
@@ -14,20 +26,21 @@ const Login = ({setLoginEmail, navigate, message, setMessage}) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ name, password }),
                 // credentials: 'include',  // Include cookies (session)
             });
     
             const data = await response.json();
             if (response.ok) {
                 setMessage(data.message);  // Success message
-                setLoginEmail(email);
-                localStorage.setItem('loginEmail', email);
+                setLoginName(name);
+                localStorage.setItem('loginName', name);
                 navigate('/dashboard');
             } else {
                 setMessage(data.message);  // Error message
             }
         } catch (error) {
+            navigate('/login');
             console.error("Error logging in:", error);
             setMessage('An error occurred. Please try again.');
         }
@@ -43,16 +56,16 @@ const Login = ({setLoginEmail, navigate, message, setMessage}) => {
                         <span className='welcomeText'>Welcome to you!</span> <span className='welcomeText'>Login into your account</span>
                         <form className='form1' onSubmit={(e) => {e.preventDefault(); login()}}>
                             <input className='email'
-                                type='email' 
-                                required 
-                                autoFocus 
+                                type='text'
+                                required
+                                autoFocus
                                 placeholder='Email address'
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value.trim())}
+                                value={name}
+                                onChange={(e) => setName(e.target.value.trim())}
                             />
-                            <input className='password' 
-                                type={showPassword ? 'text' : 'password'} 
-                                required 
+                            <input className='password'
+                                type={showPassword ? 'text' : 'password'}
+                                required
                                 placeholder='Password'
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value.trim())}

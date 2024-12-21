@@ -4,7 +4,7 @@ import dashboardImage from './imgs&vdos/dashboard_img.webp';
 
 const Dashboard = ({logout, navigate, message, setMessage}) => {
 
-    const loginEmail = localStorage.getItem('loginEmail');
+    const loginName = localStorage.getItem('loginName');
     const [allTrainings, setAllTrainings] = useState([]);
     const [upcomingTrainings, setUpcomingTrainings] = useState([]);
     const [ongoingTrainings, setOngoingTrainings] = useState([]);
@@ -29,13 +29,14 @@ const Dashboard = ({logout, navigate, message, setMessage}) => {
 
 
     useEffect (() => {
-        if(!loginEmail){
+        if(!loginName){
+            localStorage.removeItem('loginName');
             navigate('/login')
-            console.log(loginEmail);
+            console.log(loginName);
         }else{
             fetchTrainings();
         }
-    }, [loginEmail, navigate]);
+    }, [loginName, navigate]);
 
     
   return (
@@ -45,6 +46,7 @@ const Dashboard = ({logout, navigate, message, setMessage}) => {
             <span className='navbarItem'>
                 <span><Link className='navbarItems' to={'/add_training'}>Add Training</Link></span>
                 <span><Link className='navbarItems' to={'/search'}>Search Data</Link></span>
+                <span><Link className='navbarItems' to={'http://localhost:3000/search'}>Admin Panel</Link></span>
             </span>
             <span className='logout'>
                 <button onClick={logout}>LogOut</button>

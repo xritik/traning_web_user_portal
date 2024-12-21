@@ -8,21 +8,21 @@ import EditTraining from './EditTraining';
 
 function App() {
   const navigate = useNavigate();
-  const [loginEmail, setLoginEmail] = useState(localStorage.getItem('loginEmail') || '');
+  const [loginName, setLoginName] = useState(localStorage.getItem('loginName') || '');
   const [message, setMessage] = useState('');
-  console.log('LoginEmail:- ',loginEmail);
+  console.log('LoginName:- ',loginName);
 
   useEffect(() => {
-    if (loginEmail) {
-      localStorage.setItem('loginEmail', loginEmail);
+    if (loginName) {
+      localStorage.setItem('loginName', loginName);
     } else {
-      localStorage.removeItem('loginEmail');
+      localStorage.removeItem('loginName');
     }
-  }, [loginEmail]);
+  }, [loginName]);
 
   // Logout function
   const logout = () => {
-    localStorage.removeItem('loginEmail'); // Remove user from localStorage
+    localStorage.removeItem('loginName'); // Remove user from localStorage
     localStorage.removeItem('trainingToEdit');
     navigate('/login');
     setMessage('Successfully logged out')
@@ -31,8 +31,8 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login setLoginEmail={setLoginEmail} navigate={navigate} message={message} setMessage={setMessage} />} />
-        <Route path="/login" element={<Login setLoginEmail={setLoginEmail} navigate={navigate} message={message} setMessage={setMessage} />} />
+        <Route path="/" element={<Login setLoginName={setLoginName} navigate={navigate} message={message} setMessage={setMessage} />} />
+        <Route path="/login" element={<Login setLoginName={setLoginName} navigate={navigate} message={message} setMessage={setMessage} />} />
         <Route path="/dashboard" element={<Dashboard logout={logout} navigate={navigate} message={message} setMessage={setMessage} />} />
         <Route path="/add_training" element={<AddTraining logout={logout} setMessage={setMessage} navigate={navigate} />} />
         <Route path="/search" element={<SearchData logout={logout} navigate={navigate} />} />

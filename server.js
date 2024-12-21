@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors'); // Import cors
 require('dotenv').config();
 const app = express();
-const PORT = 5000
+const PORT = 5000;
 require('./db');
 
 const corsOptions = {
@@ -15,19 +15,16 @@ app.use(express.json());
 
 
 
-const loginRoutes = require('./routes/loginRoutes')
+const loginRoutes = require('./routes/loginRoutes');
+const addTrainingRoutes = require('./routes/add_trainingRoutes');
+const searchData = require('./routes/searchData');
+const trainings = require('./routes/trainingRoutes');
+
+
+
 app.use('/login', loginRoutes);
-
-const addTrainingRoutes = require('./routes/add_trainingRoutes')
 app.use('/add_training', addTrainingRoutes);
-
-const searchData = require('./routes/searchData')
 app.use('/search', searchData);
-
-const adminConformation = require('./routes/adminConformationRoute')
-app.use('/admin', adminConformation);
-
-const trainings = require('./routes/trainingRoutes')
 app.use('/trainings', trainings);
 
 app.listen(PORT, () => console.log('Server is running at port ', PORT));

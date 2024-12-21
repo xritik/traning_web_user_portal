@@ -20,7 +20,7 @@ const EditTraining = ({ setMessage, navigate }) => {
         paymentAmount: ''
     });
 
-    const loginEmail = localStorage.getItem('loginEmail');
+    const loginName = localStorage.getItem('loginName');
 
     useEffect(() => {
         const training = localStorage.getItem('trainingToEdit');
@@ -33,27 +33,30 @@ const EditTraining = ({ setMessage, navigate }) => {
 
 
     useEffect(() => {
-        if (!loginEmail) {
+        if (!loginName) {
             navigate('/login');
         }
-
-        const fetchTraining = async () => {
-            try {
-                const response = await fetch(`http://localhost:5000/trainings/${id}`);
-                const data = await response.json();
-                if (response.ok) {
-                    setTrainingData(data);
-                } else {
-                    setMessage(data.message);
+    
+        if (id) {  // Ensure id is not empty before fetching
+            const fetchTraining = async () => {
+                try {
+                    const response = await fetch(`http://localhost:5000/trainings/${id}`);
+                    const data = await response.json();
+                    if (response.ok) {
+                        setTrainingData(data);
+                    } else {
+                        setMessage(data.message);
+                    }
+                } catch (error) {
+                    console.error('Error fetching training data:', error);
+                    setMessage('Failed to fetch training data.');
                 }
-            } catch (error) {
-                console.error('Error fetching training data:', error);
-                setMessage('Failed to fetch training data.');
-            }
-        };
-
-        fetchTraining();
-    }, [id, loginEmail, navigate, setMessage]);
+            };
+    
+            fetchTraining();
+        }
+    }, [id, loginName, navigate, setMessage]);
+    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
