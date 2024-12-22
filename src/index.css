@@ -468,6 +468,63 @@ hr{
 }
 
 @media (max-width: 480px) {
+  .loginForm{
+    width: 100%;
+  }
+  .loginImage{
+    display: none;
+  }
+  .login{
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .welcomeText{
+    width: 90%;
+  }
+  .form1{
+    width: 90%;
+  }
+
+
+  nav{
+    height: 40px !important;
+  }
+  .brandName{
+    font-size: 15px !important;
+    width: 20% !important;
+  }
+  .navbarItem{
+    width: 65% !important;
+    font-size: 10px;
+    gap: 15px !important;
+  }
+  .logout{
+    width: 15% !important;
+    button{
+      padding: 5px !important;
+      font-size: 12px !important;
+      border-radius: 4px;
+    }
+  }
+  .showTrainingSection{
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+  .showTrainings{
+    width: 80%;
+  }
+
+
+  .dashboardText{
+    width: 100%;
+    padding-top: 30px;
+  }
+  .dashboardImage{
+    display: none;
+  }
+
+
   nav{
     height: 45px;
   }

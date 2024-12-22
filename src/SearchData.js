@@ -26,32 +26,6 @@ const SearchData = ({logout, navigate}) => {
           handleSearch(searchedText);
         };
     }, [searchedText]);
-
-
-    const verifyEmail = async (trainingToEdit) => {
-        try {
-            const response = await fetch('http://localhost:5000/admin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ loginName }),
-            });
-    
-            const data = await response.json();
-            
-            if (response.status === 200 && data.user.role === 'admin') {
-                navigate('/edit_training')
-                localStorage.setItem('trainingToEdit', JSON.stringify(trainingToEdit));
-            } else {
-                localStorage.removeItem('trainingToEdit');
-                alert("You can't edit, because you'r not an 'Admin' user!!")
-            }
-        } catch (error) {
-            localStorage.removeItem('trainingToEdit');
-            console.error('Error verifying email:', error);
-        }
-    };
         
 
     const handleSearch = async () => {
@@ -157,7 +131,7 @@ const SearchData = ({logout, navigate}) => {
                                         <td>{data.remarks}</td>
                                         <td>{data.labUsed}</td>
                                         <td className="editButtonDiv">
-                                            <button onClick={() => verifyEmail(data)} >Edit</button>
+                                            <button /*</td>onClick={() => verifyEmail(data)}</tr>*/ >Edit</button>
                                         </td>
                                     </tr>
                                 </tbody>

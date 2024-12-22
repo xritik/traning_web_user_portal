@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 const AddTraining = ({ logout, setMessage, navigate }) => {
 
-    const loginEmail = localStorage.getItem('loginEmail');
+    const loginName = localStorage.getItem('loginName');
     useEffect (() => {
-        if(!loginEmail){
+        if(!loginName){
             navigate('/login')
-            console.log(loginEmail);
+            console.log(loginName);
         }
     },);
 
@@ -37,8 +37,8 @@ const AddTraining = ({ logout, setMessage, navigate }) => {
             const data = await response.json();
             if (response.ok) {
                 setMessage(data.message);  // Success message
+                alert('Training, successfully added')
                 navigate('/dashboard')
-                navigate('/add_training')
             } else {
                 setMessage(data.message);  // Error message
             }
@@ -142,7 +142,7 @@ const AddTraining = ({ logout, setMessage, navigate }) => {
                         onChange={(e) => setRemarks(e.target.value)}
                     /> 
                     <br/>
-                    <label for="yesNo" className='select'>Labs Used:
+                    <label htmlFor="yesNo" className='select'>Labs Used:
                         <select 
                             required
                             value={labUsed}

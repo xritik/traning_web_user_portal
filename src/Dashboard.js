@@ -45,7 +45,7 @@ const Dashboard = ({logout, navigate, message, setMessage}) => {
             <span className='brandName'>Training</span>
             <span className='navbarItem'>
                 <span><Link className='navbarItems' to={'/add_training'}>Add Training</Link></span>
-                <span><Link className='navbarItems' to={'/search'}>Search Data</Link></span>
+                <span><Link className='navbarItems' to={'/edit_training'}>Search Data</Link></span>
                 <span><Link className='navbarItems' to={'http://localhost:3000/search'}>Admin Panel</Link></span>
             </span>
             <span className='logout'>
@@ -55,7 +55,7 @@ const Dashboard = ({logout, navigate, message, setMessage}) => {
         <div className='dashboard'>
             <div className='dashboardText'>
                 <div className='dashboardHeading'>Welcome to You!</div>
-                <p><i>Hello dear, here you can manage your trainings.</i></p>
+                <p style={{padding:'5px'}}><i>Hello dear, here you can manage your trainings.</i></p>
                 <div className='trainingNos'>
                     <p>Total Trainings: {allTrainings.length || 'Loading...'}</p>
                     <p>Upcoming Trainings: {upcomingTrainings.length}</p>
