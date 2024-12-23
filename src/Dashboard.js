@@ -45,8 +45,8 @@ const Dashboard = ({logout, navigate, message, setMessage}) => {
             <span className='brandName'>Training</span>
             <span className='navbarItem'>
                 <span><Link className='navbarItems' to={'/add_training'}>Add Training</Link></span>
-                <span><Link className='navbarItems' to={'/edit_training'}>Search Data</Link></span>
-                <span><Link className='navbarItems' to={'http://localhost:3000/search'}>Admin Panel</Link></span>
+                <span><Link className='navbarItems' to={'/search'}>Search Data</Link></span>
+                <span><Link className='navbarItems' to={'/dashboard'}>Admin Panel</Link></span>
             </span>
             <span className='logout'>
                 <button onClick={logout}>LogOut</button>

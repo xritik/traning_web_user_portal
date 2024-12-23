@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
 
 const EditTraining = ({ setMessage, navigate }) => {
 
@@ -35,6 +34,30 @@ const EditTraining = ({ setMessage, navigate }) => {
     useEffect(() => {
         if (!loginName) {
             navigate('/login');
+        }else{
+            const fetchUser = async () => {
+                try {
+                    const response = await fetch(`http://localhost:5000/user`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ loginName }),
+                    });
+            
+                    const data = await response.json();
+                    if (data.user.role === 'read') {
+                        alert('You have no such permissions to edit trainings');
+                        localStorage.removeItem('trainingToEdit');
+                        navigate('/search');
+                    }
+                } catch (error) {
+                    alert('Something went wrong, Please try again');
+                    localStorage.removeItem('trainingToEdit');
+                    navigate('/search');
+                }
+            }
+            fetchUser();
         }
     
         if (id) {  // Ensure id is not empty before fetching
@@ -55,7 +78,7 @@ const EditTraining = ({ setMessage, navigate }) => {
     
             fetchTraining();
         }
-    }, [id, loginName, navigate, setMessage]);
+    }, [ setMessage ]);
     
 
     const handleChange = (e) => {

@@ -19,6 +19,7 @@ const loginRoutes = require('./routes/loginRoutes');
 const addTrainingRoutes = require('./routes/add_trainingRoutes');
 const searchData = require('./routes/searchData');
 const trainings = require('./routes/trainingRoutes');
+const users = require('./routes/userRoute');
 
 
 
@@ -26,5 +27,6 @@ app.use('/login', loginRoutes);
 app.use('/add_training', addTrainingRoutes);
 app.use('/search', searchData);
 app.use('/trainings', trainings);
+app.use('/user', users);
 
 app.listen(PORT, () => console.log('Server is running at port ', PORT));

@@ -7,9 +7,10 @@ const userSchema = new mongoose.Schema({
         trim: true,
         unique: true
     },
-    // role: {
-    //     type: String,
-    // },
+    role: {
+        type: String,
+        default: 'read'
+    },
     password: {
         type: String,
         required: true

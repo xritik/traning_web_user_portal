@@ -62,6 +62,11 @@ const SearchData = ({logout, navigate}) => {
     const handleClear = () => {
         setSearchedText('');
     }
+
+    const handleEdit = (training) => {
+        localStorage.setItem('trainingToEdit', JSON.stringify(training));
+        navigate('/edit_training');
+    }
   return (
     <section>
         <nav>
@@ -131,7 +136,7 @@ const SearchData = ({logout, navigate}) => {
                                         <td>{data.remarks}</td>
                                         <td>{data.labUsed}</td>
                                         <td className="editButtonDiv">
-                                            <button /*</td>onClick={() => verifyEmail(data)}</tr>*/ >Edit</button>
+                                            <button onClick={() => handleEdit(data)} >Edit</button>
                                         </td>
                                     </tr>
                                 </tbody>

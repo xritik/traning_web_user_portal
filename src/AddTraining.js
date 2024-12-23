@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
 const AddTraining = ({ logout, setMessage, navigate }) => {
@@ -6,10 +6,31 @@ const AddTraining = ({ logout, setMessage, navigate }) => {
     const loginName = localStorage.getItem('loginName');
     useEffect (() => {
         if(!loginName){
-            navigate('/login')
-            console.log(loginName);
+            navigate('/login');
+        }else{
+            const fetchUser = async () => {
+                try {
+                    const response = await fetch(`http://localhost:5000/user`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ loginName }),
+                    });
+            
+                    const data = await response.json();
+                    if (data.user.role === 'read') {
+                        alert('You have no such permissions to add new trainings');
+                        navigate('/dashboard');
+                    }
+                } catch (error) {
+                    alert('Something went wrong, Please try again');
+                    navigate('/dashboard');
+                }
+            }
+            fetchUser();
         }
-    },);
+    }, []);
 
     
     const [trainingName, setTrainingName] = useState('');
@@ -21,7 +42,7 @@ const AddTraining = ({ logout, setMessage, navigate }) => {
     const [contact, setContact] = useState('');
     const [companyName, setCompanyName] = useState('');
     const [remarks, setRemarks] = useState('');
-    const [labUsed, setLabUsed] = useState('')
+    const [labUsed, setLabUsed] = useState('');
 
     const addTraining = async () => {
         try {
