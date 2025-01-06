@@ -20,8 +20,6 @@ const EditTraining = ({ setMessage, navigate }) => {
         paymentAmount: ''
     });
 
-    const loginName = localStorage.getItem('loginName');
-
     useEffect(() => {
         const training = localStorage.getItem('trainingToEdit');
         if (!training) {
@@ -30,21 +28,16 @@ const EditTraining = ({ setMessage, navigate }) => {
             setId(JSON.parse(training)._id);
         }
     }, []);
-
-
+    
+    
+    const loginName = localStorage.getItem('loginName');
     useEffect(() => {
         if (!loginName) {
             navigate('/login');
         }else{
             const fetchUser = async () => {
                 try {
-                    const response = await fetch(`http://localhost:5000/user`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ loginName }),
-                    });
+                    const response = await fetch(`http://localhost:5000/user/${loginName}`);
             
                     const data = await response.json();
                     if (data.user.role === 'read') {
@@ -60,7 +53,10 @@ const EditTraining = ({ setMessage, navigate }) => {
             }
             fetchUser();
         }
-    
+    }, [ loginName, navigate ]);
+
+
+    useEffect(() => {
         if (id) {  // Ensure id is not empty before fetching
             const fetchTraining = async () => {
                 try {
@@ -79,7 +75,7 @@ const EditTraining = ({ setMessage, navigate }) => {
     
             fetchTraining();
         }
-    }, [ setMessage, id ]);
+    }, [ id, setMessage ]);
     
 
     const handleChange = (e) => {

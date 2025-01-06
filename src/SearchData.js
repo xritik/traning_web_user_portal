@@ -61,29 +61,42 @@ const SearchData = ({logout, navigate}) => {
     }
 
     const handleDelete = async (training) => {
-        const confirmation = window.confirm(`Are you sure to delete user '${training.trainerName}'`)
-        if(confirmation){
-            try{
-                const response = await fetch(`http://localhost:5000/trainings/${training._id}`,{
-                    method: 'DELETE',
-                    headers: {'Content-Type': 'application/json'}
-                });
-                const data = await response.json();
-                if(response.ok){
-                    alert(data.message);
-                    handleSearch();
-                }else if(response.status === 404){
-                    alert(data.message)
-                }else if(response.status === 500){
-                    alert(data.message)
-                } else{
-                    alert('Something went wrong, Please try again!!')
+
+        try {
+            const response = await fetch(`http://localhost:5000/user/${loginName}`);
+    
+            const data = await response.json();
+            if (data.user.role === 'admin') {
+                const confirmation = window.confirm(`Are you sure to delete user '${training.trainerName}'`)
+                if(confirmation){
+                    try{
+                        const response = await fetch(`http://localhost:5000/trainings/${training._id}`,{
+                            method: 'DELETE',
+                            headers: {'Content-Type': 'application/json'}
+                        });
+                        const data = await response.json();
+                        if(response.ok){
+                            alert(data.message);
+                            handleSearch();
+                        }else if(response.status === 404){
+                            alert(data.message)
+                        }else if(response.status === 500){
+                            alert(data.message)
+                        } else{
+                            alert('Something went wrong, Please try again!!')
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        alert('Something went wrong, Please try again!!')
+                    }
                 }
-            } catch (error) {
-                console.error(error);
-                alert('Something went wrong, Please try again!!')
+            }else{
+                alert('You have no such permissions to delete trainings.');
             }
+        } catch (error) {
+            alert('Something went wrong, Please try again');
         }
+
     }
 
   return (
