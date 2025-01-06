@@ -9,7 +9,6 @@ const Dashboard = ({logout, navigate, message, setMessage}) => {
     const [upcomingTrainings, setUpcomingTrainings] = useState([]);
     const [ongoingTrainings, setOngoingTrainings] = useState([]);
     const [completedTrainings, setCompletedTrainings] = useState([]);
-    const [daysLeft, setDaysLeft] = useState('');
     const currentDate = new Date();
 
 
@@ -19,9 +18,9 @@ const Dashboard = ({logout, navigate, message, setMessage}) => {
             const data = await response.json();
             if(response.ok){
                 setAllTrainings(data);
-                setUpcomingTrainings((data.filter(training => new Date(training.startDate) > currentDate)));
-                setOngoingTrainings((data.filter(training => new Date(training.startDate) <= currentDate && new Date(training.endDate) >= currentDate)));
-                setCompletedTrainings((data.filter(training => new Date(training.endDate) < currentDate)));
+                setUpcomingTrainings((data.filter(training => (new Date(training.startDate)-19800000) > currentDate)));
+                setOngoingTrainings((data.filter(training => (new Date(training.startDate)-19800000) <= currentDate && (new Date(training.endDate)-19800000) >= currentDate)));
+                setCompletedTrainings((data.filter(training => (new Date(training.endDate)-19800000) < currentDate)));
             }
         }catch(error){
             console.error('Something went wrong', error);
@@ -38,19 +37,7 @@ const Dashboard = ({logout, navigate, message, setMessage}) => {
             fetchTrainings();
         }
     }, [loginName, navigate]);
-
-    useEffect(() => {
-        if (upcomingTrainings.length > 0) {
-            const startDate = new Date(upcomingTrainings[0].startDate);
-            const today = new Date();
-            setDaysLeft(parseInt((startDate - today) / (1000*60*60*24)))
-        } else {
-            console.log("No upcoming trainings");
-        }
-    }, [upcomingTrainings]);
     
-
-
     
   return (
     <section>
@@ -59,7 +46,7 @@ const Dashboard = ({logout, navigate, message, setMessage}) => {
             <span className='navbarItem'>
                 <span><Link className='navbarItems' to={'/add_training'}>Add Training</Link></span>
                 <span><Link className='navbarItems' to={'/search'}>Search Data</Link></span>
-                <span><Link className='navbarItems' to={'http://localhost:3001'}>Admin Panel</Link></span>
+                <span><Link className='navbarItems' to={'http://localhost:3001/dashboard'}>Admin Panel</Link></span>
             </span>
             <span className='logout'>
                 <button onClick={logout}>LogOut</button>
@@ -109,7 +96,7 @@ const Dashboard = ({logout, navigate, message, setMessage}) => {
                                 return(
                                     <tbody key={data._id}>
                                         <tr>
-                                            <td style={{color:'red'}}><b>{daysLeft}</b></td>
+                                            <td style={{color:'red'}}><b>{Math.ceil((((new Date(data.startDate)) - (new Date())) / (1000*60*60*24)))}</b></td>
                                             <td>{data.trainingName}</td>
                                             <td>{data.technology}</td>
                                             <td>{data.vendor}</td>

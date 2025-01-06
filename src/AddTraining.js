@@ -35,23 +35,24 @@ const AddTraining = ({ logout, setMessage, navigate }) => {
     
     const [trainingName, setTrainingName] = useState('');
     const [technology, setTechnology] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
     const [vendor, setVendor] = useState('');
+    const [companyName, setCompanyName] = useState('');
+    const [trainerName, setTrainerName] = useState('');
     const [email, setEmail] = useState('');
     const [contact, setContact] = useState('');
-    const [companyName, setCompanyName] = useState('');
-    const [remarks, setRemarks] = useState('');
     const [labUsed, setLabUsed] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [remarks, setRemarks] = useState('');
 
     const addTraining = async () => {
         try {
-            const response = await fetch('http://localhost:5000/add_training', {
+            const response = await fetch('http://localhost:5000/trainings', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ trainingName, technology, vendor, companyName, email, contact, startDate, endDate, remarks, labUsed }),
+                body: JSON.stringify({ trainingName, technology, vendor, companyName, trainerName, email, contact, labUsed, startDate, endDate, remarks }),
                 // credentials: 'include',  // Include cookies (session)
             });
     
@@ -122,13 +123,22 @@ const AddTraining = ({ logout, setMessage, navigate }) => {
                 </div>
                 <div className='formDiv'>
                     <input 
+                        type='text' 
+                        required 
+                        placeholder='Tainer Name'
+                        value={trainerName}
+                        onChange={(e) => setTrainerName(e.target.value)}
+                    />
+                        <br/>
+                    <input 
                         type='email' 
                         required 
                         placeholder='Email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     /> 
-                    <br/>
+                </div>
+                <div className='formDiv'>
                     <input 
                         type='tel' 
                         required 
@@ -136,6 +146,18 @@ const AddTraining = ({ logout, setMessage, navigate }) => {
                         value={contact}
                         onChange={(e) => setContact(e.target.value)}
                     />
+                    <br/>
+                    <label htmlFor="yesNo" className='select'>Labs Used:
+                        <select 
+                            required
+                            value={labUsed}
+                            onChange={(e) => setLabUsed(e.target.value)}
+                        >
+                            <option>Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </label>
                 </div>
                 <div className='formDivDate'>
                     <label>Start Date: 
@@ -162,18 +184,6 @@ const AddTraining = ({ logout, setMessage, navigate }) => {
                         value={remarks}
                         onChange={(e) => setRemarks(e.target.value)}
                     /> 
-                    <br/>
-                    <label htmlFor="yesNo" className='select'>Labs Used:
-                        <select 
-                            required
-                            value={labUsed}
-                            onChange={(e) => setLabUsed(e.target.value)}
-                        >
-                            <option>Select</option>
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </label>
                 </div>
                 <div className='submitButton'>
                     <button>Add Training</button>

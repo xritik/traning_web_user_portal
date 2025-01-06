@@ -16,16 +16,14 @@ app.use(express.json());
 
 
 const loginRoutes = require('./routes/loginRoutes');
-const addTrainingRoutes = require('./routes/add_trainingRoutes');
-const searchData = require('./routes/searchData');
+const searchTrainingsRouter = require('./routes/searchTrainingRoutes');
 const trainings = require('./routes/trainingRoutes');
 const users = require('./routes/userRoute');
 
 
 
 app.use('/login', loginRoutes);
-app.use('/add_training', addTrainingRoutes);
-app.use('/search', searchData);
+app.use('/search', searchTrainingsRouter);
 app.use('/trainings', trainings);
 app.use('/user', users);
 

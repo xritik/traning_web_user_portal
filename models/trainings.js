@@ -19,6 +19,10 @@ const trainingSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    trainerName: {
+        type: String,
+        trim: true,
+    },
     email: {
         type: String,
         trim: true,
@@ -26,6 +30,11 @@ const trainingSchema = new mongoose.Schema({
     contact: {
         type: String,
         trim: true,
+    },
+    labUsed: {
+        type: String,
+        trim: true,
+        default: 'Not specified',
     },
     startDate: {
         type: String, // Changed to Date type
@@ -39,11 +48,6 @@ const trainingSchema = new mongoose.Schema({
         type: String,
         trim: true,
         default: '',
-    },
-    labUsed: {
-        type: String,
-        trim: true,
-        default: 'Not specified',
     },
     invoiceDate: {
         type: String,

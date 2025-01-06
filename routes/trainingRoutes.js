@@ -16,8 +16,6 @@ router.get('/all', async (req, res) => {
     }
 })
 
-
-
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
@@ -36,15 +34,16 @@ router.get('/:id', async (req, res) => {
 
 
 
+
+
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const trainingData = req.body; // Updated fields
+    const trainingData = req.body;
 
     try {
-        // Find and update the training
         const updatedTraining = await Training.findByIdAndUpdate(id, trainingData, {
-            new: true, // Return the updated document
-            runValidators: true, // Ensure validation rules are applied
+            new: true, 
+            runValidators: true, 
         });
 
         if (updatedTraining) {
@@ -56,6 +55,42 @@ router.put('/:id', async (req, res) => {
         console.error("Error updating training:", error);
         res.status(500).json({ message: 'An error occurred while updating the training' });
     }
+});
+
+
+
+
+router.post('/', async (req, res) => {
+    const { trainingName, technology, vendor, companyName, trainerName, email, contact, labUsed, startDate, endDate, remarks } = req.body;
+
+    try {
+        const newTraining = new Training({ trainingName, technology, vendor, companyName, trainerName, email, contact, labUsed, startDate, endDate, remarks });
+        await newTraining.save();
+        res.status(201).json({ message: `"${trainingName}" added successfully` });
+    } catch (error) {
+        console.error("Error creating user:", error);
+        res.status(500).json({ message: 'An error occurred while adding a new training' });
+    }
+});
+
+
+
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const deletingTraining = await Training.findByIdAndDelete(id);
+
+        if(deletingTraining){
+            res.status(200).json({ message: 'Your training has been successfully deleted!!' });
+        }else{
+            res.status(404).json({ message: 'Training not found!!' });
+        };
+    } catch (error) {
+        console.error("Error deleting training", error);
+        res.status(500).json({ message: 'An error occurred while deleting the training' });
+    };
 });
 
 module.exports = router;

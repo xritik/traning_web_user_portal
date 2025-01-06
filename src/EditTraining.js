@@ -6,14 +6,15 @@ const EditTraining = ({ setMessage, navigate }) => {
     const [trainingData, setTrainingData] = useState({
         trainingName: '',
         technology: '',
-        startDate: '',
-        endDate: '',
         vendor: '',
+        companyName: '',
+        trainerName: '',
         email: '',
         contact: '',
-        companyName: '',
-        remarks: '',
         labUsed: '',
+        startDate: '',
+        endDate: '',
+        remarks: '',
         invoiceDate: '',
         releaseDate: '',
         paymentAmount: ''
@@ -78,7 +79,7 @@ const EditTraining = ({ setMessage, navigate }) => {
     
             fetchTraining();
         }
-    }, [ setMessage ]);
+    }, [ setMessage, id ]);
     
 
     const handleChange = (e) => {
@@ -177,6 +178,15 @@ const EditTraining = ({ setMessage, navigate }) => {
                     </div>
                     <div className='formDiv'>
                         <input
+                            type='text'
+                            required
+                            placeholder='Trainer Name'
+                            name='trainerName'
+                            value={trainingData.trainerName}
+                            onChange={handleChange}
+                        />
+                        <br />
+                        <input
                             type='email'
                             required
                             placeholder='Email'
@@ -184,7 +194,8 @@ const EditTraining = ({ setMessage, navigate }) => {
                             value={trainingData.email}
                             onChange={handleChange}
                         />
-                        <br />
+                    </div>
+                    <div className='formDiv'>
                         <input
                             type='tel'
                             required

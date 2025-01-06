@@ -10,8 +10,7 @@ const SearchData = ({logout, navigate}) => {
     const loginName = localStorage.getItem('loginName');
     useEffect (() => {
         if(!loginName){
-            navigate('/login')
-            console.log(loginName);
+            navigate('/login');
         }
     },);
 
@@ -30,20 +29,13 @@ const SearchData = ({logout, navigate}) => {
 
     const handleSearch = async () => {
         if (!searchedText.trim()) {
-            setSearchedData([]); // Clear data
+            setSearchedData([]);
             setMessage("");
             return;
         }
 
         try {
-            const response = await fetch(`http://localhost:5000/search/${searchedText}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                // body: JSON.stringify({ searchedText }),
-                // credentials: 'include',  // Include cookies (session)
-            });
+            const response = await fetch(`http://localhost:5000/search/${searchedText}`);
     
             const data = await response.json();
             if (response.ok) {
@@ -67,6 +59,33 @@ const SearchData = ({logout, navigate}) => {
         localStorage.setItem('trainingToEdit', JSON.stringify(training));
         navigate('/edit_training');
     }
+
+    const handleDelete = async (training) => {
+        const confirmation = window.confirm(`Are you sure to delete user '${training.trainerName}'`)
+        if(confirmation){
+            try{
+                const response = await fetch(`http://localhost:5000/trainings/${training._id}`,{
+                    method: 'DELETE',
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const data = await response.json();
+                if(response.ok){
+                    alert(data.message);
+                    handleSearch();
+                }else if(response.status === 404){
+                    alert(data.message)
+                }else if(response.status === 500){
+                    alert(data.message)
+                } else{
+                    alert('Something went wrong, Please try again!!')
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Something went wrong, Please try again!!')
+            }
+        }
+    }
+
   return (
     <section>
         <nav>
@@ -113,12 +132,13 @@ const SearchData = ({logout, navigate}) => {
                                 <th>Technology</th>
                                 <th>Vendor</th>
                                 <th>Company Name</th>
+                                <th>Trainer Name</th>
                                 <th>Email</th>
                                 <th>Contact</th>
+                                <th>Labs Used</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Remarks</th>
-                                <th>Labs Used</th>
                             </tr>
                         </thead>
                         {searchedData.map((data) => {
@@ -129,14 +149,16 @@ const SearchData = ({logout, navigate}) => {
                                         <td>{data.technology}</td>
                                         <td>{data.vendor}</td>
                                         <td>{data.companyName}</td>
+                                        <td>{data.trainerName}</td>
                                         <td>{data.email}</td>
                                         <td>{data.contact}</td>
+                                        <td>{data.labUsed}</td>
                                         <td>{data.startDate}</td>
                                         <td>{data.endDate}</td>
                                         <td>{data.remarks}</td>
-                                        <td>{data.labUsed}</td>
                                         <td className="editButtonDiv">
-                                            <button onClick={() => handleEdit(data)} >Edit</button>
+                                            <button onClick={() => handleEdit(data)} style={{backgroundColor:'yellow'}} >Edit</button>
+                                            <button onClick={() => handleDelete(data)} style={{backgroundColor:'red'}}>Delete</button>
                                         </td>
                                     </tr>
                                 </tbody>

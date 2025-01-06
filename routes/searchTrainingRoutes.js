@@ -12,6 +12,7 @@ router.get('/:searchedText', async (req, res) => {
                 { technology: { $regex: searchedText, $options: 'i' } },
                 { vendor: { $regex: searchedText, $options: 'i' } },
                 { companyName: { $regex: searchedText, $options: 'i' } },
+                { trainerName: { $regex: searchedText, $options: 'i' } },
                 { email: { $regex: searchedText, $options: 'i' } },
                 { contact: { $regex: searchedText, $options: 'i' } },
             ],
