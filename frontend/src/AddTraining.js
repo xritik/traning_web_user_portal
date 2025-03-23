@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
-const AddTraining = ({ logout, setMessage, navigate }) => {
+const AddTraining = ({ HOST, logout, setMessage, navigate }) => {
 
     const loginName = localStorage.getItem('loginName');
     useEffect (() => {
@@ -10,7 +10,7 @@ const AddTraining = ({ logout, setMessage, navigate }) => {
         }else{
             const fetchUser = async () => {
                 try {
-                    const response = await fetch(`http://localhost:5000/user/${loginName}`);
+                    const response = await fetch(`http://${HOST}:5000/user/${loginName}`);
             
                     const data = await response.json();
                     if (data.user.role === 'read') {
@@ -41,7 +41,7 @@ const AddTraining = ({ logout, setMessage, navigate }) => {
 
     const addTraining = async () => {
         try {
-            const response = await fetch('http://localhost:5000/trainings', {
+            const response = await fetch(`http://${HOST}:5000/trainings`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

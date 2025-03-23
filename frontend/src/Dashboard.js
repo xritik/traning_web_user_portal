@@ -14,7 +14,7 @@ const Dashboard = ({logout, navigate, message, setMessage}) => {
 
     const fetchTrainings = async () => {
         try{
-            const response = await fetch('http://localhost:5000/trainings/all');
+            const response = await fetch(`http://${HOST}:5000/trainings/all`);
             const data = await response.json();
             if(response.ok){
                 setAllTrainings(data);

@@ -37,7 +37,7 @@ const EditTraining = ({ setMessage, navigate }) => {
         }else{
             const fetchUser = async () => {
                 try {
-                    const response = await fetch(`http://localhost:5000/user/${loginName}`);
+                    const response = await fetch(`http://${HOST}:5000/user/${loginName}`);
             
                     const data = await response.json();
                     if (data.user.role === 'read') {
@@ -60,7 +60,7 @@ const EditTraining = ({ setMessage, navigate }) => {
         if (id) {  // Ensure id is not empty before fetching
             const fetchTraining = async () => {
                 try {
-                    const response = await fetch(`http://localhost:5000/trainings/${id}`);
+                    const response = await fetch(`http://${HOST}:5000/trainings/${id}`);
                     const data = await response.json();
                     if (response.ok) {
                         setTrainingData(data);
@@ -88,7 +88,7 @@ const EditTraining = ({ setMessage, navigate }) => {
 
     const updateTraining = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/trainings/${id}`, {
+            const response = await fetch(`http://${HOST}:5000/trainings/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

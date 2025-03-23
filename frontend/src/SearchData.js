@@ -35,7 +35,7 @@ const SearchData = ({logout, navigate}) => {
         }
 
         try {
-            const response = await fetch(`http://localhost:5000/search/${searchedText}`);
+            const response = await fetch(`http://${HOST}:5000/search/${searchedText}`);
     
             const data = await response.json();
             if (response.ok) {
@@ -63,14 +63,14 @@ const SearchData = ({logout, navigate}) => {
     const handleDelete = async (training) => {
 
         try {
-            const response = await fetch(`http://localhost:5000/user/${loginName}`);
+            const response = await fetch(`http://${HOST}:5000/user/${loginName}`);
     
             const data = await response.json();
             if (data.user.role === 'admin') {
                 const confirmation = window.confirm(`Are you sure to delete user '${training.trainerName}'`)
                 if(confirmation){
                     try{
-                        const response = await fetch(`http://localhost:5000/trainings/${training._id}`,{
+                        const response = await fetch(`http://${HOST}:5000/trainings/${training._id}`,{
                             method: 'DELETE',
                             headers: {'Content-Type': 'application/json'}
                         });

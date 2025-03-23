@@ -10,6 +10,8 @@ function App() {
   const navigate = useNavigate();
   const [loginName, setLoginName] = useState(localStorage.getItem('loginName') || '');
   const [message, setMessage] = useState('');
+  // const HOST = 'localhost'
+  const HOST = 'portal.vikasweb.xyz'
   console.log('LoginName:- ',loginName);
 
   useEffect(() => {
@@ -31,12 +33,12 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login setLoginName={setLoginName} navigate={navigate} message={message} setMessage={setMessage} />} />
-        <Route path="/login" element={<Login setLoginName={setLoginName} navigate={navigate} message={message} setMessage={setMessage} />} />
-        <Route path="/dashboard" element={<Dashboard logout={logout} navigate={navigate} message={message} setMessage={setMessage} />} />
-        <Route path="/add_training" element={<AddTraining logout={logout} setMessage={setMessage} navigate={navigate} />} />
-        <Route path="/search" element={<SearchData logout={logout} navigate={navigate} />} />
-        <Route path="/edit_training" element={<EditTraining setMessage={setMessage} navigate={navigate} />} />
+        <Route path="/" element={<Login HOST={HOST} setLoginName={setLoginName} navigate={navigate} message={message} setMessage={setMessage} />} />
+        <Route path="/login" element={<Login HOST={HOST} setLoginName={setLoginName} navigate={navigate} message={message} setMessage={setMessage} />} />
+        <Route path="/dashboard" element={<Dashboard HOST={HOST} logout={logout} navigate={navigate} message={message} setMessage={setMessage} />} />
+        <Route path="/add_training" element={<AddTraining HOST={HOST} logout={logout} setMessage={setMessage} navigate={navigate} />} />
+        <Route path="/search" element={<SearchData HOST={HOST} logout={logout} navigate={navigate} />} />
+        <Route path="/edit_training" element={<EditTraining HOST={HOST} setMessage={setMessage} navigate={navigate} />} />
       </Routes>
     </div>
   );
