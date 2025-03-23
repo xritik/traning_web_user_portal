@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import loginImage from './imgs&vdos/loginside.svg'
 
-const Login = ({setLoginName, navigate, message, setMessage}) => {
+const Login = ({ HOST, setLoginName, navigate, message, setMessage}) => {
     const [showPassword, setShowPassword] = useState(false);
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');

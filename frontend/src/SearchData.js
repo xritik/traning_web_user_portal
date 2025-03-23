@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-const SearchData = ({logout, navigate}) => {
+const SearchData = ({ HOST, logout, navigate}) => {
 
     const [searchedText, setSearchedText] = useState('');
     const [searchedData, setSearchedData] = useState([]);

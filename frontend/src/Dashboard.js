@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom';
 import dashboardImage from './imgs&vdos/dashboard_img.webp';
 
-const Dashboard = ({logout, navigate, message, setMessage}) => {
+const Dashboard = ({ HOST, logout, navigate, message, setMessage}) => {
 
     const loginName = localStorage.getItem('loginName');
     const [allTrainings, setAllTrainings] = useState([]);

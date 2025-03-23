@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const EditTraining = ({ setMessage, navigate }) => {
+const EditTraining = ({ HOST, setMessage, navigate }) => {
 
     const [id, setId] = useState('');
     const [trainingData, setTrainingData] = useState({
