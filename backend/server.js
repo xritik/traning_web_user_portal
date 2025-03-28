@@ -6,8 +6,8 @@ const PORT = 5000;
 require('./db');
 
 const corsOptions = {
-    origin: 'http://portal.vikasweb.xyz:3000',  // Allow only requests from this origin
-    // origin: 'http://localhost:3000',  // Allow only requests from this origin
+    // origin: 'http://portal.vikasweb.xyz:3000',  // Allow only requests from this origin
+    origin: ['http://localhost:3000', 'http://192.168.1.15:3000', 'http://portal.vikasweb.xyz:3000'],  // Allow only requests from this origin
     credentials: true,                // Allow credentials (cookies) to be sent
 };
 app.use(cors(corsOptions));
