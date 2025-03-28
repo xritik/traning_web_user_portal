@@ -10,8 +10,7 @@ function App() {
   const navigate = useNavigate();
   const [loginName, setLoginName] = useState(localStorage.getItem('loginName') || '');
   const [message, setMessage] = useState('');
-  // const HOST = 'localhost'
-  const HOST = 'portal.vikasweb.xyz'
+  const HOST = `${window.location.hostname}`;
   console.log('LoginName:- ',loginName);
 
   useEffect(() => {
