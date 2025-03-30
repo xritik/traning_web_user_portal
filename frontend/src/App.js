@@ -11,6 +11,7 @@ function App() {
   const [loginName, setLoginName] = useState(localStorage.getItem('loginName') || '');
   const [message, setMessage] = useState('');
   const HOST = `${window.location.hostname}`;
+  // const HOST = 'localhost'
   console.log('LoginName:- ',loginName);
 
   useEffect(() => {
